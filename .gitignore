@@ -1,1 +1,8 @@
 venv
+# Ignore Python cache files
+__pycache__/
+*.pyc
+
+# Ignore downloaded .pkl files
+movies_dict.pkl
+similarity.pkl
