@@ -3,6 +3,5 @@ venv
 __pycache__/
 *.pyc
 
-# Ignore downloaded .pkl files
-movies_dict.pkl
-similarity.pkl
+# Ignore large data files
+*.pkl
