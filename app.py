@@ -8,20 +8,40 @@ import os
 MOVIES_DICT_URL = "https://drive.google.com/uc?export=download&id=1lGGJ6rqaKU1lCzTyR7joWL1YosvgeNna"
 SIMILARITY_URL = "https://drive.google.com/uc?export=download&id=1Jfy8zB_MwJg343HbtvD4tPutADg4Ak_F"
 
+# Function to download files from Google Drive
+def download_file_from_google_drive(file_id, destination):
+    URL = "https://drive.google.com/uc?export=download"
+    session = requests.Session()
+
+    # Initial request to get the confirmation token
+    response = session.get(URL, params={"id": file_id}, stream=True)
+    token = None
+    for key, value in response.cookies.items():
+        if key.startswith("download_warning"):
+            token = value
+            break
+
+    # Download the file with the confirmation token
+    if token:
+        params = {"id": file_id, "confirm": token}
+        response = session.get(URL, params=params, stream=True)
+
+    # Save the file
+    with open(destination, "wb") as f:
+        for chunk in response.iter_content(32768):
+            if chunk:
+                f.write(chunk)
+
 # Download and load movies_dict.pkl
 if not os.path.exists("movies_dict.pkl"):
     st.write("Downloading movies_dict.pkl...")
-    response = requests.get(MOVIES_DICT_URL)
-    with open("movies_dict.pkl", "wb") as f:
-        f.write(response.content)
+    download_file_from_google_drive("1lGGJ6rqaKU1lCzTyR7joWL1YosvgeNna", "movies_dict.pkl")
     st.write("Downloaded movies_dict.pkl")
 
 # Download and load similarity.pkl
 if not os.path.exists("similarity.pkl"):
     st.write("Downloading similarity.pkl...")
-    response = requests.get(SIMILARITY_URL)
-    with open("similarity.pkl", "wb") as f:
-        f.write(response.content)
+    download_file_from_google_drive("1Jfy8zB_MwJg343HbtvD4tPutADg4Ak_F", "similarity.pkl")
     st.write("Downloaded similarity.pkl")
 
 # Load the files
@@ -78,7 +98,6 @@ if st.button("Recommend"):
     with col5:
         st.text(names[4])
         st.image(posters[4])
-
 # import streamlit as st
 # import pickle
 # import pandas as pd
