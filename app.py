@@ -44,12 +44,23 @@ if not os.path.exists("similarity.pkl"):
     download_file_from_google_drive("1Jfy8zB_MwJg343HbtvD4tPutADg4Ak_F", "similarity.pkl")
     st.write("Downloaded similarity.pkl")
 
-# Load the files
-with open("movies_dict.pkl", "rb") as f:
-    movies_dict = pickle.load(f)
+# Debug: Check the contents of the downloaded files
+st.write("Debugging downloaded files...")
+try:
+    with open("movies_dict.pkl", "rb") as f:
+        st.write("movies_dict.pkl size:", os.path.getsize("movies_dict.pkl"))
+        movies_dict = pickle.load(f)
+        st.write("movies_dict.pkl loaded successfully!")
+except Exception as e:
+    st.error(f"Error loading movies_dict.pkl: {e}")
 
-with open("similarity.pkl", "rb") as f:
-    similarity = pickle.load(f)
+try:
+    with open("similarity.pkl", "rb") as f:
+        st.write("similarity.pkl size:", os.path.getsize("similarity.pkl"))
+        similarity = pickle.load(f)
+        st.write("similarity.pkl loaded successfully!")
+except Exception as e:
+    st.error(f"Error loading similarity.pkl: {e}")
 
 # Convert movies_dict to a DataFrame
 movies = pd.DataFrame(movies_dict)
