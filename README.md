@@ -1,6 +1,6 @@
 # Content-Based Movie Recommender System
 
-This repository contains a content-based movie recommender system that leverages movie metadata from TMDB. The system is built with a focus on simplicity and ease-of-use, featuring a Streamlit front end and a model developed using a Jupyter Notebook.
+This repository contains a content-based movie recommender system that leverages movie metadata from TMDB. The system is built with a focus on simplicity and ease-of-use, featuring a Streamlit front end and a model developed using a Jupyter Notebook and deployed in Render. The idea is inspired from the following source: https://tinyurl.com/5frvjyru
 
 ## Data Source
 
